@@ -40,17 +40,13 @@ class SortZerosOnesTwosMethods
 			{
 				if(elements[j] == 0)
 				{
-					int a = elements[j];
-					elements[j]=elements[i];
-					elements[i] = a;
+					swapElements(elements,i,j);
 					i++;
 					j++;
 				}
 				else if(elements[j] == 2)
 				{
-					int swapN=elements[j];
-					elements[j]=elements[k];
-					elements[k]=swapN;
+					swapElements(elements,j,k);
 					k--;
 					
 				}
@@ -66,6 +62,12 @@ class SortZerosOnesTwosMethods
 		{
 			System.out.print(" "+elements[i]);
 		}
+	}
+	public void swapElements(int[] elements,int i,int j)
+	{
+		int a =elements[j];
+		elements[j]=elements[i];
+		elements[i] = a;
 	}
 }
 
