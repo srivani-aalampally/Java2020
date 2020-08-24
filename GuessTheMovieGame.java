@@ -23,7 +23,7 @@ public static void main(String[] args) throws IOException
 	{
 		movieList.add(s.nextLine());
 	}
-	GameMethods g = new GuessTheMovieMethods();
+	GameMethods g = new GameMethods();
 	String movieName = g.randomMovie(movieList);	
 	int points = 0;
 	while(points<10)
@@ -47,12 +47,21 @@ class GameMethods
 	String checkLetter="";
 	public String randomMovie(List<String> movieList)
 	{
+		int movieListLength = movieList.size(); 
 		double randNum = Math.random();
-			   randNum = randNum*6+1;
+			   randNum = randNum*movieListLength+1;
 	    randInt = (int) randNum;
 		String movieName = movieList.get(randInt);
-		movieNameDummy = movieName.replaceAll("[a-zA-Z]","_");
-		System.out.println(movieName);
+		//movieNameDummy = movieName.replaceAll("[a-zA-Z]","_");
+		//Without using replaceAll function
+		movieNameDummy = String.valueOf(movieName);
+		for(int k=0;k<movieNameDummy.length();k++)
+		{
+			if(movieNameDummy.charAt(k)!=' ')
+				movieNameDummy=movieNameDummy.substring(0,k)+'_'+movieNameDummy.substring(k+1);
+		}
+		System.out.println(movieNameDummy);		
+		//System.out.println(movieName);
 		return movieName;
 	}
 	public char getMovieLetterFromUser() throws IOException
@@ -62,11 +71,19 @@ class GameMethods
 			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 			System.out.println("Guess a letter of a movie");
 			letter = (char) br.read();
+			//validation check for white spaces and empty input
+			
 			if(checkLetter.indexOf(letter)!=-1)
 			{
 				System.out.println("You have already guessed this letter please try other");
 				getMovieLetterFromUser();
 			}
+			else if (Character.toString(letter).trim().equals(""))
+			{
+				System.out.println("You have not entered any alphabet please enter valid input: ");
+				getMovieLetterFromUser();
+			}
+			else		
 			checkLetter = checkLetter+letter;		
 		}
 	else
@@ -107,4 +124,3 @@ class GameMethods
 
 	}
 }
-
